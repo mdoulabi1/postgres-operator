@@ -35,6 +35,8 @@ configGeneral:
   enable_team_id_clustername_prefix: false
   # etcd connection string for Patroni. Empty uses K8s-native DCS.
   etcd_host: ""
+  # etcd version v2 (default) or v3
+  etcd_host_version: v2
   # Spilo docker image
   docker_image: ghcr.io/zalando/spilo-18:4.1-p1
 

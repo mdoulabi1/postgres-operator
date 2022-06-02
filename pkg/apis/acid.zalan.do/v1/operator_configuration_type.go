@@ -261,6 +261,7 @@ type OperatorConfigurationData struct {
 	EnableSpiloWalPathCompat      bool                               `json:"enable_spilo_wal_path_compat,omitempty"`
 	EnableTeamIdClusternamePrefix bool                               `json:"enable_team_id_clustername_prefix,omitempty"`
 	EtcdHost                      string                             `json:"etcd_host,omitempty"`
+	EtcdHostVersion               string                             `json:"etcd_host_version,omitempty"`
 	KubernetesUseConfigMaps       bool                               `json:"kubernetes_use_configmaps,omitempty"`
 	DockerImage                   string                             `json:"docker_image,omitempty"`
 	Workers                       uint32                             `json:"workers,omitempty"`
