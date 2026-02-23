@@ -176,6 +176,7 @@ type Config struct {
 	WatchedNamespace        string            `name:"watched_namespace"` // special values: "*" means 'watch all namespaces', the empty string "" means 'watch a namespace where operator is deployed to'
 	KubernetesUseConfigMaps bool              `name:"kubernetes_use_configmaps" default:"false"`
 	EtcdHost                string            `name:"etcd_host" default:""` // special values: the empty string "" means Patroni will use K8s as a DCS
+	EtcdHostVersion         string            `name:"etcd_host_version" default:"v2"`
 	MaintenanceWindows      []string          `name:"maintenance_windows"`
 	DockerImage             string            `name:"docker_image" default:"ghcr.io/zalando/spilo-18:4.1-p1"`
 	SidecarImages           map[string]string `name:"sidecar_docker_images"` // deprecated in favour of SidecarContainers
@@ -308,6 +309,12 @@ func Copy(c *Config) Config {
 }
 
 func validate(cfg *Config) (err error) {
+	if cfg.EtcdHostVersion == "" {
+		cfg.EtcdHostVersion = "v2"
+	}
+	if cfg.EtcdHostVersion != "v2" && cfg.EtcdHostVersion != "v3" {
+		return fmt.Errorf("etcd_host_version must be one of v2 or v3, got %q", cfg.EtcdHostVersion)
+	}
 	if cfg.MinInstances > 0 && cfg.MaxInstances > 0 && cfg.MinInstances > cfg.MaxInstances {
 		err = fmt.Errorf("minimum number of instances %d is set higher than the maximum number %d",
 			cfg.MinInstances, cfg.MaxInstances)
